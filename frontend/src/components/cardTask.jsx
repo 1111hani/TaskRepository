@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-//
 export default function CardTask(props) {
     const { taskId, title, completed, index } = props
 
