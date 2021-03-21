@@ -7,8 +7,8 @@ import { getUsersTasklListServer } from './connectServer/userController'
 export default function ShowTasks(props) {
     const user = props.user
     const [taskList, setTaskList] = useState([{}])
-    const [progress,setProgress]=useState(0)
-    const [mesProgress,setMesProgress]=useState('')
+    const [progress, setProgress] = useState(0)
+    const [mesProgress, setMesProgress] = useState('')
 
     useEffect(async function () {
         const res = await getUsersTasklListServer(user._id, user.token)
@@ -46,7 +46,7 @@ export default function ShowTasks(props) {
         }
         else {
             setMesProgress('faild!!!')
-             console.log("faild!" + res.response.data.toString())
+            console.log("faild!" + res.response.data.toString())
         }
         setProgress(0)
     }
@@ -72,12 +72,14 @@ export default function ShowTasks(props) {
 
     return (
         <>
+
             <div className="container-fluid mt-5 ">
-            <div className="progress fixed-top">
+                {taskList.length == [] ? <h3 className="text-warning text-center m-auto">-You have no tasks-</h3> :'' }
+                <div className="progress fixed-top">
                     <div
                         className="progress-bar bg-warning"
                         role="progressbar"
-                        style={{width: `${progress}%`}}
+                        style={{ width: `${progress}%` }}
                         aria-valuenow="75"
                         aria-valuemin="0"
                         aria-valuemax="100"
@@ -97,7 +99,7 @@ export default function ShowTasks(props) {
 
                     })}
                 </div>
-               
+
             </div>
         </>
     );

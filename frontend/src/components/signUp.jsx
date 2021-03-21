@@ -15,7 +15,8 @@ export default withRouter(function SignUp(props) {
 
    
     async function req() {
-        if (userNameRef.current.value != '' && emailRef.current.value != '' && passwordRef.current.value != '') {
+        if (checkUserName.status && checkPassword.status && checkEmail.status) {
+            // if (userNameRef.current.value != '' && emailRef.current.value != '' && passwordRef.current.value != '') {
             // authMethodes.signUp(emailRef.current.value,passwordRef.current.value)
             const res = await signUpServer(userNameRef.current.value, passwordRef.current.value, emailRef.current.value)
             console.log('1 from then compon ', res);
