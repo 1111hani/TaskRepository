@@ -80,8 +80,10 @@ const getUserById = (req, res) => {
 const forgotPassword = (req, res) => {
     User.findOne({ userName: req.query.userName, email: req.query.email })
         .then((user) => {
-            sendMailPasword(user.userName, user.email, user.password)
-            res.status(200).send('success!')
+            if (user) {
+                sendMailPasword(user.userName, user.email, user.password)
+                res.status(200).send('success!')
+            }
         })
         .catch(err => {
             res.status(400).send('error!!' + err)

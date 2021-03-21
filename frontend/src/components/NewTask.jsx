@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 import { addTaskServer } from './connectServer/taskcontroller'
 
-export default function NewTask(props) {
+export default withRouter(function NewTask(props) {
 
     const [toDoList, setTodoList] = useState([{}])
     const [currentTask, setCurrentTask] = useState('')
@@ -78,30 +79,34 @@ export default function NewTask(props) {
                         </div>
                         <div className="alert alert-success  mt-5" role="alert" style={{ display: displaySucces }}>
                             The task was successfully added!
-                            <button 
-                            type="button" 
-                            className="btn-close float-e" 
-                            style={{float:'right'}}
-                            aria-label="Close"
-                            onClick={()=>setDisplaySuccess('none')}></button>
+                            <button
+                                type="button"
+                                className="btn-close float-e"
+                                style={{ float: 'right' }}
+                                aria-label="Close"
+                                onClick={() => setDisplaySuccess('none')}></button>
                         </div>
                         <div className="alert alert-danger  mt-5" role="alert" style={{ display: displayFaild }}>
                             Failed to add task!
-                            <button 
-                            type="button"
-                            style={{float:'right'}}
-                            className="btn-close" 
-                            aria-label="Close"
-                            onClick={()=>setDisplayField('none')}></button>
+                            <button
+                                type="button"
+                                style={{ float: 'right' }}
+                                className="btn-close"
+                                aria-label="Close"
+                                onClick={() => setDisplayField('none')}></button>
                         </div>
                         <button className="btn btn-warning  position-absolute bottom-0 end-0 me-3 mb-3" onClick={() => req()}>
                             {hidden ? <span className="spinner-border spinner-border-sm text-secondary" role="status" aria-hidden="true"></span> : ''}
                             + ADD TASK
                         </button>
+                        <button className="btn btn-outline-warning  position-absolute bottom-0 start-2 me-3 mb-3"
+                            onClick={() => { return props.history.push('/ShowTask') }}>
+                            Show your tasks
+                            </button>
                     </div>
                 </div>
             </div>
         </>
     )
 
-}
+})

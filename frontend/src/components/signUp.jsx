@@ -1,7 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { signUpServer } from './connectServer/userController'
-import {authMethodes} from './firebase/authMethods'
+import { validEmail, validPassword, validUserName } from './validation'
 
 export default withRouter(function SignUp(props) {
 
@@ -9,22 +9,22 @@ export default withRouter(function SignUp(props) {
     const emailRef = useRef('')
     const passwordRef = useRef('')
 
+    const [checkUserName, setCheckUserName] = useState({ status: false, message: '' })
+    const [checkPassword, setCheckPassword] = useState({ status: false, message: '' })
+    const [checkEmail, setCheckEmail] = useState({ status: false, message: '' })
 
    
     async function req() {
         if (userNameRef.current.value != '' && emailRef.current.value != '' && passwordRef.current.value != '') {
-            authMethodes.signUp(emailRef.current.value,passwordRef.current.value)
+            // authMethodes.signUp(emailRef.current.value,passwordRef.current.value)
             const res = await signUpServer(userNameRef.current.value, passwordRef.current.value, emailRef.current.value)
             console.log('1 from then compon ', res);
             if (res != undefined && res.status == 200) {
                 console.log('2 from then compon ', res);
                 return props.history.push('/Login')
             }
-            // })        
         }
     }
-
-
     return (
         <div className="container mt-5">
             <div className="row">
@@ -39,7 +39,11 @@ export default withRouter(function SignUp(props) {
                                 id="userName"
                                 ref={userNameRef}
                                 placeholder="*Enter userName"
-                                className="form-control" />
+                                className="form-control" 
+                                onChange={()=>setCheckUserName (validUserName(userNameRef.current.value))}/>
+                                {checkUserName.status == false ? <div className="valid-feedback d-block text-danger">
+                                    {checkUserName.message}
+                                </div> : ''}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="text-light fw-bold form-label text-center">Email address</label>
@@ -49,7 +53,11 @@ export default withRouter(function SignUp(props) {
                                 id="email"
                                 ref={emailRef}
                                 placeholder="*Enter email"
-                                className="form-control" />
+                                className="form-control" 
+                                onChange={()=>setCheckEmail (validEmail(emailRef.current.value))}/>
+                                {checkEmail.status == false ? <div className="valid-feedback d-block text-danger">
+                                    {checkEmail.message}
+                                </div> : ''}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="text-light fw-bold form-label text-center">Choose a password between 8-10</label>
@@ -59,12 +67,15 @@ export default withRouter(function SignUp(props) {
                                 id="pass"
                                 ref={passwordRef}
                                 placeholder="*Enter password"
-                                className="form-control" />
+                                className="form-control"
+                                onChange={()=>setCheckPassword (validPassword(passwordRef.current.value))} />
+                                {checkPassword.status == false ? <div className="valid-feedback d-block text-danger">
+                                    {checkPassword.message}
+                                </div> : ''}
                         </div>
                         <div className="mb-3">
                             <button type="submit" className="form-control btn btn-warning" onClick={() => req()}>SignUp</button>
                         </div>
-
                     </div>
                 </div>
             </div>

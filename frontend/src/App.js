@@ -1,7 +1,6 @@
 import './App.css';
 import { Provider } from 'react-redux'
 import store from './components/redux/store';
-import LogIn from './components/logIn';
 import NavBar from './components/navbar';
 import { BrowserRouter as Router } from 'react-router-dom'
 

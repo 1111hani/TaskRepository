@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 export default function CardTask(props) {
     const { taskId, title, completed, index } = props
 
@@ -6,6 +6,8 @@ export default function CardTask(props) {
     const titledRef = useRef(title)
 
     const [dis, setDis] = useState(true)
+
+    
 
     function handlerDisable() {
         if ((titledRef.current.value != title) || (completedRef.current.checked != completed))
